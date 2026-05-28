@@ -1,478 +1,197 @@
 import streamlit as st
 import yfinance as yf
 import pandas as pd
-import numpy as np
 from datetime import datetime, timedelta
 import plotly.graph_objects as go
 
-# =========================================================
+# =====================================================
 # PAGE CONFIG
-# =========================================================
+# =====================================================
 
 st.set_page_config(
-    page_title="Institutional Swing Scanner",
+    page_title="Simple Swing Scanner",
     page_icon="📈",
     layout="wide"
 )
 
-st.title("📈 Institutional-Grade Swing Trading Scanner")
-st.caption("Focus: High-quality trends, relative strength, accumulation & controlled volatility")
+st.title("📈 NIFTY Universe Swing Scanner")
+st.caption("Simple trend-following scanner for probable swing candidates")
 
-# =========================================================
-# PRESETS
-# =========================================================
+# =====================================================
+# NIFTY BROAD UNIVERSE
+# =====================================================
 
-# =========================================================
-# TIERED INSTITUTIONAL INDIA UNIVERSE
-# =========================================================
+NIFTY_UNIVERSE = [
 
-TICKER_PRESETS = {
+    # BANKS
+    "HDFCBANK.NS","ICICIBANK.NS","SBIN.NS","AXISBANK.NS","KOTAKBANK.NS",
 
-    "Tiered Institutional India Universe": [
+    # IT
+    "TCS.NS","INFY.NS","HCLTECH.NS","TECHM.NS","WIPRO.NS","LTIM.NS",
 
-        # =====================================================
-        # TIER 1 — LARGE CAPS / CORE LEADERS
-        # =====================================================
+    # AUTO
+    "MARUTI.NS","TATAMOTORS.NS","M&M.NS","BAJAJ-AUTO.NS","EICHERMOT.NS",
 
-        "RELIANCE.NS",
-        "TCS.NS",
-        "INFY.NS",
-        "HDFCBANK.NS",
-        "ICICIBANK.NS",
-        "KOTAKBANK.NS",
-        "AXISBANK.NS",
-        "SBIN.NS",
-        "BAJFINANCE.NS",
-        "BHARTIARTL.NS",
-        "ITC.NS",
-        "LT.NS",
-        "MARUTI.NS",
-        "M&M.NS",
-        "TITAN.NS",
-        "ASIANPAINT.NS",
-        "ULTRACEMCO.NS",
-        "NESTLEIND.NS",
-        "HINDUNILVR.NS",
-        "SUNPHARMA.NS",
-        "CIPLA.NS",
-        "DRREDDY.NS",
-        "TATAMOTORS.NS",
-        "POWERGRID.NS",
-        "NTPC.NS",
-        "TATAPOWER.NS",
+    # CAPITAL GOODS
+    "SIEMENS.NS","ABB.NS","CGPOWER.NS","POLYCAB.NS","KEI.NS","APLAPOLLO.NS",
 
-        # =====================================================
-        # TIER 2 — QUALITY MIDCAP LEADERS
-        # =====================================================
+    # DEFENCE
+    "HAL.NS","BEL.NS","BDL.NS","BHEL.NS",
 
-        "POLYCAB.NS",
-        "KEI.NS",
-        "DIXON.NS",
-        "KAYNES.NS",
-        "CGPOWER.NS",
-        "SIEMENS.NS",
-        "ABB.NS",
-        "CUMMINSIND.NS",
-        "APLAPOLLO.NS",
-        "ASTRAL.NS",
-        "SUPREMEIND.NS",
-        "HAVELLS.NS",
-        "VOLTAS.NS",
-        "PERSISTENT.NS",
-        "COFORGE.NS",
-        "KPITTECH.NS",
-        "LTIM.NS",
-        "MPHASIS.NS",
-        "OFSS.NS",
-        "TRENT.NS",
-        "VBL.NS",
-        "DMART.NS",
-        "INDHOTEL.NS",
-        "RADICO.NS",
-        "EMAMILTD.NS",
-        "MAXHEALTH.NS",
-        "FORTIS.NS",
-        "MANKIND.NS",
-        "TORNTPHARM.NS",
+    # PHARMA
+    "SUNPHARMA.NS","CIPLA.NS","DIVISLAB.NS","TORNTPHARM.NS",
 
-        # =====================================================
-        # TIER 3 — DEFENCE / CAPITAL GOODS
-        # =====================================================
+    # CONSUMPTION
+    "ITC.NS","HINDUNILVR.NS","NESTLEIND.NS","VBL.NS","TRENT.NS",
 
-        "HAL.NS",
-        "BEL.NS",
-        "BDL.NS",
-        "BHEL.NS",
-        "AZAD.NS",
-        "ZENTEC.NS",
-        "SKFINDIA.NS",
-        "TIMKEN.NS",
-        "THERMAX.NS",
-        "SCHAEFFLER.NS",
-        "ELECON.NS",
-        "KSB.NS",
+    # FINANCIALS
+    "BAJFINANCE.NS","CHOLAFIN.NS","SHRIRAMFIN.NS","MUTHOOTFIN.NS",
 
-        # =====================================================
-        # TIER 4 — FINANCIALIZATION THEME
-        # =====================================================
+    # THEMATIC
+    "DIXON.NS","KAYNES.NS","KPITTECH.NS","PERSISTENT.NS","COFORGE.NS",
 
-        "BSE.NS",
-        "CDSL.NS",
-        "MCX.NS",
-        "CHOLAFIN.NS",
-        "SHRIRAMFIN.NS",
-        "MUTHOOTFIN.NS",
-        "SBICARD.NS",
+    # ENERGY
+    "RELIANCE.NS","NTPC.NS","POWERGRID.NS","TATAPOWER.NS","JSWENERGY.NS",
 
-        # =====================================================
-        # TIER 5 — REAL ESTATE / INFRA
-        # =====================================================
+    # REAL ESTATE
+    "DLF.NS","LODHA.NS","OBEROIRLTY.NS"
+]
 
-        "LODHA.NS",
-        "OBEROIRLTY.NS",
-        "PRESTIGE.NS",
-        "DLF.NS",
-        "GODREJPROP.NS",
-
-        # =====================================================
-        # TIER 6 — POWER / ELECTRIFICATION
-        # =====================================================
-
-        "JSWENERGY.NS",
-        "NHPC.NS",
-        "ADANIENSOL.NS",
-        "SUZLON.NS",
-
-        # =====================================================
-        # TIER 7 — SPECIAL SITUATION GROWTH
-        # =====================================================
-
-        "SONACOMS.NS",
-        "ENDURANCE.NS",
-        "CLEAN.NS",
-        "AFFLE.NS",
-        "EASEMYTRIP.NS",
-        "CDSL.NS",
-        "BLS.NS"
-    ]
-}
-
-# =========================================================
+# =====================================================
 # SIDEBAR
-# =========================================================
+# =====================================================
 
-st.sidebar.header("⚙ Scanner Controls")
+st.sidebar.header("Scanner Settings")
 
-market = st.sidebar.selectbox(
-    "Market Preset",
-    list(TICKER_PRESETS.keys())
-)
-
-default_tickers = ", ".join(TICKER_PRESETS[market])
-
-raw_input = st.sidebar.text_area(
-    "Tickers",
-    value=default_tickers,
-    height=180
-)
-
-min_score = st.sidebar.slider(
-    "Minimum Institutional Score",
-    40,
-    100,
-    70
-)
-
-min_volume_cr = st.sidebar.slider(
-    "Minimum Daily Traded Value (Crores ₹)",
-    5,
-    500,
-    50
-)
-
-max_distance_50dma = st.sidebar.slider(
-    "Max Distance Above 50 DMA %",
+top_n = st.sidebar.slider(
+    "Top Candidates",
     5,
     30,
-    18
-)
-
-show_only_top = st.sidebar.slider(
-    "Top Results",
-    5,
-    50,
     15
 )
 
-# =========================================================
-# PARSE TICKERS
-# =========================================================
-
-tickers = [x.strip().upper() for x in raw_input.split(",") if x.strip()]
-
-# =========================================================
-# DATA FETCHING
-# =========================================================
+# =====================================================
+# DATA FETCH
+# =====================================================
 
 @st.cache_data(ttl=3600)
-def fetch_market_data(tickers):
+def fetch_data(tickers):
 
     end = datetime.now()
-    start = end - timedelta(days=450)
+    start = end - timedelta(days=400)
 
     data = yf.download(
-        tickers=tickers,
+        tickers,
         start=start,
         end=end,
-        auto_adjust=True,
         group_by='ticker',
+        auto_adjust=True,
         progress=False,
         threads=True
     )
 
     return data
 
-# =========================================================
-# INDICATORS
-# =========================================================
+# =====================================================
+# ANALYSIS FUNCTION
+# =====================================================
 
-def compute_rsi(series, period=14):
-
-    delta = series.diff()
-
-    gain = delta.clip(lower=0)
-    loss = -delta.clip(upper=0)
-
-    avg_gain = gain.rolling(period).mean()
-    avg_loss = loss.rolling(period).mean()
-
-    rs = avg_gain / (avg_loss + 1e-9)
-
-    rsi = 100 - (100 / (1 + rs))
-
-    return rsi
-
-# =========================================================
-# STOCK ANALYSIS
-# =========================================================
-
-def analyze_stock(df, ticker, nifty_return):
+def analyze_stock(df, ticker):
 
     try:
 
-        if len(df) < 220:
+        if len(df) < 200:
             return None
 
         close = df["Close"]
         volume = df["Volume"]
 
-        latest_price = close.iloc[-1]
+        current_price = close.iloc[-1]
 
-        # ==========================
-        # MOVING AVERAGES
-        # ==========================
+        sma50 = close.rolling(50).mean().iloc[-1]
+        sma200 = close.rolling(200).mean().iloc[-1]
 
-        sma50 = close.rolling(50).mean()
-        sma150 = close.rolling(150).mean()
-        sma200 = close.rolling(200).mean()
+        avg_volume = volume.iloc[-20:].mean()
 
-        latest_sma50 = sma50.iloc[-1]
-        latest_sma150 = sma150.iloc[-1]
-        latest_sma200 = sma200.iloc[-1]
+        # =====================================
+        # BASIC LIQUIDITY FILTER
+        # =====================================
 
-        # ==========================
-        # RSI
-        # ==========================
+        if avg_volume < 200000:
+            return None
 
-        rsi = compute_rsi(close)
-        latest_rsi = rsi.iloc[-1]
+        # =====================================
+        # MOMENTUM
+        # =====================================
 
-        # ==========================
-        # VOLUME
-        # ==========================
+        return_3m = (
+            (close.iloc[-1] / close.iloc[-60]) - 1
+        ) * 100
 
-        vol20 = volume.rolling(20).mean()
-
-        latest_vol_ratio = volume.iloc[-1] / (vol20.iloc[-1] + 1)
-
-        # ==========================
-        # VOLATILITY
-        # ==========================
-
-        atr_proxy = ((df["High"] - df["Low"]) / close).rolling(14).mean()
-
-        latest_atr = atr_proxy.iloc[-1]
-
-        # ==========================
+        # =====================================
         # DISTANCE FROM 50 DMA
-        # ==========================
+        # =====================================
 
-        distance_50dma = ((latest_price - latest_sma50) / latest_sma50) * 100
+        distance_50 = (
+            (current_price - sma50) / sma50
+        ) * 100
 
-        # ==========================
-        # RELATIVE STRENGTH
-        # ==========================
+        # =====================================
+        # SCORE
+        # =====================================
 
-        stock_return = ((close.iloc[-1] / close.iloc[-60]) - 1) * 100
+        score = 0
 
-        rs_value = stock_return - nifty_return
+        # Trend structure
+        if current_price > sma50:
+            score += 25
 
-        # ==========================
-        # LIQUIDITY
-        # ==========================
+        if sma50 > sma200:
+            score += 25
 
-        traded_value = (
-            latest_price *
-            volume.iloc[-20:].mean()
-        ) / 1e7
+        # Momentum
+        if return_3m > 10:
+            score += 25
 
-        # ==========================
-        # TREND SCORE
-        # ==========================
+        if return_3m > 20:
+            score += 15
 
-        trend_score = 0
-
-        if latest_price > latest_sma50:
-            trend_score += 10
-
-        if latest_sma50 > latest_sma150:
-            trend_score += 10
-
-        if latest_sma150 > latest_sma200:
-            trend_score += 10
-
-        if close.iloc[-1] > close.iloc[-20]:
-            trend_score += 5
-
-        # ==========================
-        # RELATIVE STRENGTH SCORE
-        # ==========================
-
-        rs_score = 0
-
-        if rs_value > 0:
-            rs_score += 10
-
-        if rs_value > 5:
-            rs_score += 10
-
-        if rs_value > 10:
-            rs_score += 10
-
-        # ==========================
-        # VOLUME ACCUMULATION SCORE
-        # ==========================
-
-        volume_score = 0
-
-        if latest_vol_ratio > 1.2:
-            volume_score += 10
-
-        if latest_vol_ratio > 1.5:
-            volume_score += 5
-
-        # ==========================
-        # VOLATILITY QUALITY SCORE
-        # ==========================
-
-        volatility_score = 0
-
-        if latest_atr < 0.05:
-            volatility_score += 10
-
-        if distance_50dma < 10:
-            volatility_score += 10
-
-        # ==========================
-        # RSI QUALITY
-        # ==========================
-
-        rsi_score = 0
-
-        if 55 <= latest_rsi <= 75:
-            rsi_score += 10
-
-        # ==========================
-        # TOTAL SCORE
-        # ==========================
-
-        total_score = (
-            trend_score +
-            rs_score +
-            volume_score +
-            volatility_score +
-            rsi_score
-        )
-
-        # ==========================
-        # FILTERS
-        # ==========================
-
-        if traded_value < min_volume_cr:
-            return None
-
-        if distance_50dma > max_distance_50dma:
-            return None
-
-        if latest_price < latest_sma200:
-            return None
+        # Avoid overextended stocks
+        if distance_50 < 20:
+            score += 10
 
         return {
             "Ticker": ticker,
-            "Price": round(latest_price, 2),
-            "Institutional Score": round(total_score, 1),
-            "RS vs NIFTY": round(rs_value, 2),
-            "RSI": round(latest_rsi, 1),
-            "Volume Ratio": round(latest_vol_ratio, 2),
-            "Distance 50DMA %": round(distance_50dma, 2),
-            "ATR Proxy": round(latest_atr * 100, 2),
-            "Daily Traded Value Cr": round(traded_value, 2),
-            "50 DMA": round(latest_sma50, 2),
-            "200 DMA": round(latest_sma200, 2)
+            "Price": round(current_price, 2),
+            "3M Return %": round(return_3m, 2),
+            "Distance From 50DMA %": round(distance_50, 2),
+            "Score": score
         }
 
     except:
         return None
 
-# =========================================================
-# MAIN EXECUTION
-# =========================================================
+# =====================================================
+# RUN SCANNER
+# =====================================================
 
-if st.button("🚀 Run Institutional Scan", type="primary"):
+if st.button("🚀 Run Scanner", type="primary"):
 
-    with st.spinner("Scanning for high-probability institutional setups..."):
+    with st.spinner("Scanning NIFTY universe..."):
 
-        market_data = fetch_market_data(tickers)
+        market_data = fetch_data(NIFTY_UNIVERSE)
 
         results = []
 
-        # ==========================================
-        # NIFTY BENCHMARK
-        # ==========================================
-
-        nifty = yf.download(
-            "^NSEI",
-            period="6mo",
-            progress=False,
-            auto_adjust=True
-        )
-
-        nifty_return = (
-            (nifty["Close"].iloc[-1] / nifty["Close"].iloc[-60]) - 1
-        ) * 100
-
         progress = st.progress(0)
 
-        for idx, ticker in enumerate(tickers):
+        for idx, ticker in enumerate(NIFTY_UNIVERSE):
 
             try:
 
-                df = market_data[ticker].copy()
+                df = market_data[ticker]
 
-                if df.empty:
-                    continue
-
-                result = analyze_stock(df, ticker, nifty_return)
+                result = analyze_stock(df, ticker)
 
                 if result:
                     results.append(result)
@@ -480,135 +199,89 @@ if st.button("🚀 Run Institutional Scan", type="primary"):
             except:
                 pass
 
-            progress.progress((idx + 1) / len(tickers))
+            progress.progress((idx + 1) / len(NIFTY_UNIVERSE))
 
         progress.empty()
 
-    # =====================================================
+    # =================================================
     # RESULTS
-    # =====================================================
+    # =================================================
 
     if len(results) == 0:
 
-        st.warning("No high-quality setups found today.")
+        st.warning("No candidates found.")
 
     else:
 
         results_df = pd.DataFrame(results)
 
         results_df = results_df.sort_values(
-            by="Institutional Score",
+            by="Score",
             ascending=False
         )
 
-        results_df = results_df[
-            results_df["Institutional Score"] >= min_score
-        ]
+        results_df = results_df.head(top_n)
 
-        results_df = results_df.head(show_only_top)
-
-        st.success(f"Found {len(results_df)} high-quality institutional setups.")
+        st.success(f"Found {len(results_df)} probable swing candidates.")
 
         st.dataframe(
-            results_df.style.background_gradient(
-                subset=["Institutional Score"],
-                cmap="RdYlGn"
-            ),
+            results_df,
             use_container_width=True
         )
 
-        # =================================================
-        # STOCK CHART
-        # =================================================
+        # =============================================
+        # CHART VIEWER
+        # =============================================
 
         st.markdown("---")
-
-        st.subheader("📊 Technical Structure Viewer")
 
         selected_stock = st.selectbox(
             "Select Stock",
-            results_df["Ticker"].tolist()
+            results_df["Ticker"]
         )
 
-        if selected_stock:
+        chart_df = market_data[selected_stock].copy()
 
-            chart_df = market_data[selected_stock].copy()
+        chart_df["50DMA"] = chart_df["Close"].rolling(50).mean()
+        chart_df["200DMA"] = chart_df["Close"].rolling(200).mean()
 
-            close = chart_df["Close"]
+        fig = go.Figure()
 
-            chart_df["50DMA"] = close.rolling(50).mean()
-            chart_df["200DMA"] = close.rolling(200).mean()
-
-            fig = go.Figure()
-
-            fig.add_trace(
-                go.Candlestick(
-                    x=chart_df.index,
-                    open=chart_df["Open"],
-                    high=chart_df["High"],
-                    low=chart_df["Low"],
-                    close=chart_df["Close"],
-                    name="Price"
-                )
+        fig.add_trace(
+            go.Candlestick(
+                x=chart_df.index,
+                open=chart_df["Open"],
+                high=chart_df["High"],
+                low=chart_df["Low"],
+                close=chart_df["Close"],
+                name="Price"
             )
+        )
 
-            fig.add_trace(
-                go.Scatter(
-                    x=chart_df.index,
-                    y=chart_df["50DMA"],
-                    name="50 DMA"
-                )
+        fig.add_trace(
+            go.Scatter(
+                x=chart_df.index,
+                y=chart_df["50DMA"],
+                name="50 DMA"
             )
+        )
 
-            fig.add_trace(
-                go.Scatter(
-                    x=chart_df.index,
-                    y=chart_df["200DMA"],
-                    name="200 DMA"
-                )
+        fig.add_trace(
+            go.Scatter(
+                x=chart_df.index,
+                y=chart_df["200DMA"],
+                name="200 DMA"
             )
+        )
 
-            fig.update_layout(
-                title=f"{selected_stock} Institutional Structure",
-                height=650,
-                template="plotly_dark",
-                xaxis_rangeslider_visible=False
-            )
+        fig.update_layout(
+            height=650,
+            template="plotly_dark",
+            xaxis_rangeslider_visible=False,
+            title=f"{selected_stock} Structure"
+        )
 
-            st.plotly_chart(
-                fig,
-                use_container_width=True
-            )
-
-        # =================================================
-        # TOP INSIGHTS
-        # =================================================
-
-        st.markdown("---")
-
-        st.subheader("🧠 Scanner Logic")
-
-        st.markdown("""
-### What This Scanner Prioritizes
-- Strong trend structure
-- Relative strength vs NIFTY
-- Institutional accumulation behavior
-- Controlled volatility
-- Liquid quality stocks
-- Non-extended setups
-
-### What This Scanner Avoids
-- Penny stocks
-- Illiquid traps
-- Chaotic charts
-- Overextended momentum
-- Weak relative strength
-- Random operator spikes
-
-### Best Use Case
-This scanner is designed for:
-- 3–4 month swing trades
-- Position trading
-- Trend continuation setups
-- Institutional-style stock selection
-""")
+        st.plotly_chart(
+            fig,
+            use_container_width=True
+        )
