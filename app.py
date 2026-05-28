@@ -23,22 +23,121 @@ st.caption("Focus: High-quality trends, relative strength, accumulation & contro
 # =========================================================
 
 TICKER_PRESETS = {
-    "NIFTY 50 Sample": [
+
+    "Institutional India Universe": [
+
+        # =========================
+        # LARGE CAPS
+        # =========================
+
         "RELIANCE.NS",
         "TCS.NS",
         "INFY.NS",
         "HDFCBANK.NS",
         "ICICIBANK.NS",
         "SBIN.NS",
-        "BHARTIARTL.NS",
-        "ITC.NS",
-        "LT.NS",
-        "SUNPHARMA.NS",
         "AXISBANK.NS",
-        "BAJFINANCE.NS",
-        "TATAMOTORS.NS",
+        "KOTAKBANK.NS",
+        "LT.NS",
+        "ITC.NS",
+        "BHARTIARTL.NS",
+        "ASIANPAINT.NS",
+        "ULTRACEMCO.NS",
         "MARUTI.NS",
-        "ULTRACEMCO.NS"
+        "TITAN.NS",
+        "SUNPHARMA.NS",
+        "BAJFINANCE.NS",
+        "HCLTECH.NS",
+        "TECHM.NS",
+        "POWERGRID.NS",
+
+        # =========================
+        # STRONG MIDCAPS
+        # =========================
+
+        "POLYCAB.NS",
+        "DIXON.NS",
+        "PERSISTENT.NS",
+        "COFORGE.NS",
+        "BSE.NS",
+        "CDSL.NS",
+        "INDHOTEL.NS",
+        "ABB.NS",
+        "SIEMENS.NS",
+        "CUMMINSIND.NS",
+        "SCHAEFFLER.NS",
+        "SUPREMEIND.NS",
+        "ASTRAL.NS",
+        "APLAPOLLO.NS",
+        "KEI.NS",
+        "HAVELLS.NS",
+        "LODHA.NS",
+        "OBEROIRLTY.NS",
+        "MAXHEALTH.NS",
+        "FORTIS.NS",
+
+        # =========================
+        # CAPITAL GOODS / DEFENCE
+        # =========================
+
+        "BEL.NS",
+        "HAL.NS",
+        "BDL.NS",
+        "BHEL.NS",
+        "CGPOWER.NS",
+        "KPITTECH.NS",
+        "SKFINDIA.NS",
+
+        # =========================
+        # CONSUMPTION / RETAIL
+        # =========================
+
+        "TRENT.NS",
+        "DMART.NS",
+        "VBL.NS",
+        "RADICO.NS",
+        "EMAMILTD.NS",
+
+        # =========================
+        # PHARMA / HEALTHCARE
+        # =========================
+
+        "DIVISLAB.NS",
+        "CIPLA.NS",
+        "TORNTPHARM.NS",
+        "MANKIND.NS",
+
+        # =========================
+        # FINANCIALS
+        # =========================
+
+        "CHOLAFIN.NS",
+        "SHRIRAMFIN.NS",
+        "MUTHOOTFIN.NS",
+        "MCX.NS",
+
+        # =========================
+        # MANUFACTURING / THEMATIC
+        # =========================
+
+        "KAYNES.NS",
+        "ZENTECH.NS",
+        "AZAD.NS",
+        "ENDURANCE.NS",
+        "SONACOMS.NS",
+        "TIMKEN.NS",
+        "SKFINDIA.NS",
+        "THERMAX.NS",
+
+        # =========================
+        # ENERGY / POWER
+        # =========================
+
+        "NTPC.NS",
+        "NHPC.NS",
+        "JSWENERGY.NS",
+        "TATAPOWER.NS",
+
     ]
 }
 
