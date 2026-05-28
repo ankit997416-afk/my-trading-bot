@@ -22,122 +22,138 @@ st.caption("Focus: High-quality trends, relative strength, accumulation & contro
 # PRESETS
 # =========================================================
 
+# =========================================================
+# TIERED INSTITUTIONAL INDIA UNIVERSE
+# =========================================================
+
 TICKER_PRESETS = {
 
-    "Institutional India Universe": [
+    "Tiered Institutional India Universe": [
 
-        # =========================
-        # LARGE CAPS
-        # =========================
+        # =====================================================
+        # TIER 1 — LARGE CAPS / CORE LEADERS
+        # =====================================================
 
         "RELIANCE.NS",
         "TCS.NS",
         "INFY.NS",
         "HDFCBANK.NS",
         "ICICIBANK.NS",
-        "SBIN.NS",
-        "AXISBANK.NS",
         "KOTAKBANK.NS",
-        "LT.NS",
-        "ITC.NS",
+        "AXISBANK.NS",
+        "SBIN.NS",
+        "BAJFINANCE.NS",
         "BHARTIARTL.NS",
+        "ITC.NS",
+        "LT.NS",
+        "MARUTI.NS",
+        "M&M.NS",
+        "TITAN.NS",
         "ASIANPAINT.NS",
         "ULTRACEMCO.NS",
-        "MARUTI.NS",
-        "TITAN.NS",
+        "NESTLEIND.NS",
+        "HINDUNILVR.NS",
         "SUNPHARMA.NS",
-        "BAJFINANCE.NS",
-        "HCLTECH.NS",
-        "TECHM.NS",
+        "CIPLA.NS",
+        "DRREDDY.NS",
+        "TATAMOTORS.NS",
         "POWERGRID.NS",
+        "NTPC.NS",
+        "TATAPOWER.NS",
 
-        # =========================
-        # STRONG MIDCAPS
-        # =========================
+        # =====================================================
+        # TIER 2 — QUALITY MIDCAP LEADERS
+        # =====================================================
 
         "POLYCAB.NS",
+        "KEI.NS",
         "DIXON.NS",
+        "KAYNES.NS",
+        "CGPOWER.NS",
+        "SIEMENS.NS",
+        "ABB.NS",
+        "CUMMINSIND.NS",
+        "APLAPOLLO.NS",
+        "ASTRAL.NS",
+        "SUPREMEIND.NS",
+        "HAVELLS.NS",
+        "VOLTAS.NS",
         "PERSISTENT.NS",
         "COFORGE.NS",
-        "BSE.NS",
-        "CDSL.NS",
-        "INDHOTEL.NS",
-        "ABB.NS",
-        "SIEMENS.NS",
-        "CUMMINSIND.NS",
-        "SCHAEFFLER.NS",
-        "SUPREMEIND.NS",
-        "ASTRAL.NS",
-        "APLAPOLLO.NS",
-        "KEI.NS",
-        "HAVELLS.NS",
-        "LODHA.NS",
-        "OBEROIRLTY.NS",
-        "MAXHEALTH.NS",
-        "FORTIS.NS",
-
-        # =========================
-        # CAPITAL GOODS / DEFENCE
-        # =========================
-
-        "BEL.NS",
-        "HAL.NS",
-        "BDL.NS",
-        "BHEL.NS",
-        "CGPOWER.NS",
         "KPITTECH.NS",
-        "SKFINDIA.NS",
-
-        # =========================
-        # CONSUMPTION / RETAIL
-        # =========================
-
+        "LTIM.NS",
+        "MPHASIS.NS",
+        "OFSS.NS",
         "TRENT.NS",
-        "DMART.NS",
         "VBL.NS",
+        "DMART.NS",
+        "INDHOTEL.NS",
         "RADICO.NS",
         "EMAMILTD.NS",
-
-        # =========================
-        # PHARMA / HEALTHCARE
-        # =========================
-
-        "DIVISLAB.NS",
-        "CIPLA.NS",
-        "TORNTPHARM.NS",
+        "MAXHEALTH.NS",
+        "FORTIS.NS",
         "MANKIND.NS",
+        "TORNTPHARM.NS",
 
-        # =========================
-        # FINANCIALS
-        # =========================
+        # =====================================================
+        # TIER 3 — DEFENCE / CAPITAL GOODS
+        # =====================================================
 
+        "HAL.NS",
+        "BEL.NS",
+        "BDL.NS",
+        "BHEL.NS",
+        "AZAD.NS",
+        "ZENTEC.NS",
+        "SKFINDIA.NS",
+        "TIMKEN.NS",
+        "THERMAX.NS",
+        "SCHAEFFLER.NS",
+        "ELECON.NS",
+        "KSB.NS",
+
+        # =====================================================
+        # TIER 4 — FINANCIALIZATION THEME
+        # =====================================================
+
+        "BSE.NS",
+        "CDSL.NS",
+        "MCX.NS",
         "CHOLAFIN.NS",
         "SHRIRAMFIN.NS",
         "MUTHOOTFIN.NS",
-        "MCX.NS",
+        "SBICARD.NS",
 
-        # =========================
-        # MANUFACTURING / THEMATIC
-        # =========================
+        # =====================================================
+        # TIER 5 — REAL ESTATE / INFRA
+        # =====================================================
 
-        "KAYNES.NS",
-        "ZENTECH.NS",
-        "AZAD.NS",
-        "ENDURANCE.NS",
-        "SONACOMS.NS",
-        "TIMKEN.NS",
-        "SKFINDIA.NS",
-        "THERMAX.NS",
+        "LODHA.NS",
+        "OBEROIRLTY.NS",
+        "PRESTIGE.NS",
+        "DLF.NS",
+        "GODREJPROP.NS",
 
-        # =========================
-        # ENERGY / POWER
-        # =========================
+        # =====================================================
+        # TIER 6 — POWER / ELECTRIFICATION
+        # =====================================================
 
-        "NTPC.NS",
-        "NHPC.NS",
         "JSWENERGY.NS",
-        "TATAPOWER.NS",
+        "NHPC.NS",
+        "ADANIENSOL.NS",
+        "SUZLON.NS",
 
+        # =====================================================
+        # TIER 7 — SPECIAL SITUATION GROWTH
+        # =====================================================
+
+        "SONACOMS.NS",
+        "ENDURANCE.NS",
+        "CLEAN.NS",
+        "AFFLE.NS",
+        "EASEMYTRIP.NS",
+        "CDSL.NS",
+        "BLS.NS"
     ]
 }
 
